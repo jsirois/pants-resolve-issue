@@ -1,0 +1,48 @@
+[GLOBAL]
+pants_version = "2.30.0a0"
+print_stacktrace = true
+pythonpath = ["%(buildroot)s/pants-plugins"]
+
+backend_packages = [
+  "pants.backend.python",
+
+  "pants.backend.plugin_development",
+]
+
+[source]
+# The Python source root is the repo root. See https://www.pantsbuild.org/docs/source-roots.
+root_patterns = ["/", "/pants-plugins"]
+
+
+[python]
+# The default interpreter compatibility for code in this repo. Individual targets can override
+#  this with the `compatibility` field. See
+#  https://www.pantsbuild.org/docs/python-interpreter-compatibility.
+interpreter_constraints = [">=3.11,<3.12"]
+# Use a lockfile. See https://www.pantsbuild.org/docs/python-third-party-dependencies.
+enable_resolves = true
+pip_version = "25.0"
+
+[python.resolves]
+pants-plugins = "pants-plugins/lock.txt"
+inference = "lockfiles/inference.lock"
+
+[python.resolves_to_sources]
+# If we don't specify this as two separate lines, pex will only install
+# the linux version, because the pytorch wheels are tagged weird
+inference = [
+  "pytorch_cpu=torch; sys_platform != 'darwin'",
+  "pytorch_cpu=torch; sys_platform == 'darwin'",
+  ]
+
+
+[python.resolves_to_interpreter_constraints]
+# our plugin! This only impacts how the lockfile is generated.
+pants-plugins = [">=3.11,<3.12"]
+inference = [">=3.11,<3.12"]
+
+[python-repos]
+indexes = [
+    "https://pypi.org/simple/",
+    "pytorch_cpu=https://download.pytorch.org/whl/cpu"
+]
