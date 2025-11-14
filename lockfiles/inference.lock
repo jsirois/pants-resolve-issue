@@ -9,7 +9,8 @@
 //     "CPython<3.12,>=3.11"
 //   ],
 //   "generated_with_requirements": [
-//     "torch==2.5.1"
+//     "torch==2.5.1+cpu; sys_platform != \"darwin\"",
+//     "torch==2.5.1; sys_platform == \"darwin\""
 //   ],
 //   "manylinux": "manylinux2014",
 //   "requirement_constraints": [],
@@ -18,8 +19,7 @@
 //   "excludes": [],
 //   "overrides": [],
 //   "sources": [
-//     "pypi=(?<!torch).*",
-//     "pypi=torch; sys_platform == 'darwin'",
+//     "pypi=.*",
 //     "pytorch_cpu=torch; sys_platform != 'darwin'"
 //   ]
 // }
@@ -747,7 +747,8 @@
   "pip_version": "25.0",
   "prefer_older_binary": false,
   "requirements": [
-    "torch==2.5.1"
+    "torch==2.5.1+cpu; sys_platform != \"darwin\"",
+    "torch==2.5.1; sys_platform == \"darwin\""
   ],
   "requires_python": [
     "CPython<3.12,>=3.11"

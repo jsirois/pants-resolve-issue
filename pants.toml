@@ -29,8 +29,10 @@ inference = "lockfiles/inference.lock"
 
 [python.resolves_to_sources]
 inference = [
-  "pypi=(?<!torch).*",
-  "pypi=torch; sys_platform == 'darwin'",
+  # N.B.: This works around the implicitly injected Pants plugins repo, which is un-named.
+  # By giving PyPI a name and allowing any project to be resolved from it, we avoid a duplicate
+  # un-named index / find-links repo error from Pex.
+  "pypi=.*",
   "pytorch_cpu=torch; sys_platform != 'darwin'",
 ]
 
