@@ -28,12 +28,11 @@ pants-plugins = "pants-plugins/lock.txt"
 inference = "lockfiles/inference.lock"
 
 [python.resolves_to_sources]
-# If we don't specify this as two separate lines, pex will only install
-# the linux version, because the pytorch wheels are tagged weird
 inference = [
+  "pypi=(?<!torch).*",
+  "pypi=torch; sys_platform == 'darwin'",
   "pytorch_cpu=torch; sys_platform != 'darwin'",
-  "pytorch_cpu=torch; sys_platform == 'darwin'",
-  ]
+]
 
 
 [python.resolves_to_interpreter_constraints]
@@ -43,6 +42,6 @@ inference = [">=3.11,<3.12"]
 
 [python-repos]
 indexes = [
-    "https://pypi.org/simple/",
+    "pypi=https://pypi.org/simple/",
     "pytorch_cpu=https://download.pytorch.org/whl/cpu"
 ]
